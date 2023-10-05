@@ -1,3 +1,1 @@
-# tekris
-
-# test
+# tekris • a tetris clone
