@@ -4,11 +4,12 @@ import GameStats from '../components/GameStats';
 import Previews from '../components/Previews';
 import {useBoard} from '../hooks/useBoard';
 import {useGameStats} from '../hooks/useGameStats';
+import {usePlayer} from '../hooks/usePlayer';
 
 const Tetris = ({rows, columns, setGameOver}) => {
     const [gameStats, addLinesCleared] = useGameStats();
     const [board, setBoard] = useBoard({rows, columns});
-    const player = {tetrominoes: []};
+    const [player, setPlayer, resetPlayer] = usePlayer();
 
     return (
         <div className='Tetris'>
