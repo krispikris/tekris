@@ -6,14 +6,18 @@ const Game = ({rows, columns}) => {
     // custom hook
     const [gameOver, setGameOver, resetGameOver] = useGameOver();
 
-    const start = () => resetGameOver();
+    const start = () => {
+        resetGameOver();
+        // console.log('THIS IS ROWS: ', rows)
+        // console.log('THIS IS COLUMNS: ', columns)
+    }
 
     return (
         <div className='Game'>
             {gameOver ? (
                 <Menu onClick={start} />
             ) : (
-                <Tetris row={rows} columns={columns} setGameOver={setGameOver} />
+                <Tetris rows={rows} columns={columns} setGameOver={setGameOver} />
             )}
             {/* rows {rows}, columns {columns} */}
         </div>
