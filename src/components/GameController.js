@@ -9,7 +9,10 @@ const GameController = ({
     setPlayer
 }) => {
     const onKeyUp = ({code}) => {
-        console.log(`onKeyUp: ${code}`)
+        if (code === 'KeyQ') {
+            setGameOver(true);
+        }
+        // console.log(`onKeyUp: ${code}`)
     }
 
     const onKeyDown = ({code}) => {
