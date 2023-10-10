@@ -73,6 +73,13 @@ export const randomTetromino = () => {
     return TETROMINOES[key];
 };
 
+export const rotate = ({piece, direction}) => {
+    // transpose rows and columns
+    const newPiece = piece.map((_, index) =>
+        piece.map(column => column[index])
+    );
+}
+
 export const transferToBoard = ({
     className,
     isOccupied,
