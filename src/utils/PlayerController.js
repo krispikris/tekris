@@ -5,7 +5,7 @@ import { Action } from './Input';
 const attemptRotation = ({board, player, setPlayer}) => {
     const shape = rotate({
         piece: player.tetromino.shape,
-        direction: 1
+        direction: -1
     });
 
     const position = player.position;
