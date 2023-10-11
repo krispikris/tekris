@@ -1,6 +1,7 @@
 import './GameController.css';
-import {Action, actionForKey} from '../utils/Input';
-import {playerController} from '../utils/PlayerController';
+import { Action, actionForKey } from '../utils/Input';
+import { playerController } from '../utils/PlayerController';
+import { useInterval } from '../hooks/useInterval'
 
 const GameController = ({
     board, 
