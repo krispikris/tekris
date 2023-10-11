@@ -1,5 +1,6 @@
-import {rotate} from './Tetrominoes';
-import {Action} from './Input';
+import { isWithinBoard, hasCollision } from './Board';
+import { rotate } from './Tetrominoes';
+import { Action } from './Input';
 
 const attemptRotation = ({board, player, setPlayer}) => {
     const shape = rotate({
@@ -13,6 +14,8 @@ const attemptRotation = ({board, player, setPlayer}) => {
         !hasCollision({board, position, shape});
 
     if (isValidRotation) {
+        // if it was a valid rotation, we set the player to values to what was previously
+        // on the player object, and then we set the shape to the new shape
         setPlayer({
             ...player,
             tetromino: {
