@@ -1,4 +1,5 @@
 import { defaultCell } from './Cell';
+import { movePlayer } from './PlayerController';
 import { transferToBoard } from './Tetrominoes';
 
 // func takes an object with rows and columns properties as input
@@ -15,9 +16,25 @@ export const buildBoard = ({rows, columns}) => {
     };
 };
 
+const findDropPosition = ({board, position, shape}) => {
+    let max = board.size.rows - position.row + 1;
+    let row = 0;
+
+    for (let i = 0; i < max; i++) {
+        const delta = {row: i, column: 0};
+        const result = movePlayer({ delta, position, shape, board });
+        const { collided } = result;
+
+        if (collided) break;
+
+        row = position.row + i;
+    }
+
+    return { ...position, row };
+};
+
 // func takes board, player, resetPlayer, and addLinesCleared as input
 // calculates next board state based on player's current state
-
 export const nextBoard = ({board, player, resetPlayer, addLinesCleared}) => {
     // extracts tetromino and position from player object
     const {tetromino, position} = player;
@@ -27,6 +44,38 @@ export const nextBoard = ({board, player, resetPlayer, addLinesCleared}) => {
     let rows = board.rows.map((row) => 
         row.map((cell) => (cell.occupied ? cell: { ...defaultCell }))
     );
+
+    // drop position
+    const dropPosition = findDropPosition({
+        board,
+        position,
+        shape: tetromino.shape
+    });
+
+    // placing ghost on board
+    const className = `${tetromino.className} ${
+        player.isFastDropping ? '' : 'ghost'
+    }`
+
+    rows = transferToBoard({
+        className,
+        isOccupied: player.isFastDropping,
+        position: dropPosition,
+        rows,
+        shape: tetromino.shape
+    });
+
+    // placing the tetromino piece
+    // if collided, mark board cells as collided
+    if (!player.isFastDropping) {
+        rows = transferToBoard({
+            className: tetromino.className,
+            isOccupied: player.collided,
+            position,
+            rows,
+            shape: tetromino.shape
+        });
+    };
 
     // adds current tetromino to board taking for account postion, shape, and if it has collided
     rows = transferToBoard({
