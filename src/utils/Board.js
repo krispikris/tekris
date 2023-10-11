@@ -77,7 +77,7 @@ export const nextBoard = ({board, player, resetPlayer, addLinesCleared}) => {
         });
     };
 
-    // adds current tetromino to board taking for account postion, shape, and if it has collided
+    // adds current tetromino to board taking for account poistion, shape, and if it has collided
     rows = transferToBoard({
         className: tetromino.className,
         isOccupied: player.collided,
@@ -85,6 +85,21 @@ export const nextBoard = ({board, player, resetPlayer, addLinesCleared}) => {
         rows,
         shape: tetromino.shape
     });
+
+    // check for cleared lines
+    const blankRow = rows[0].map((_) => ({ ...defaultCell }));
+    let linesCleared = 0;
+
+    rows = rows.reduce((acc, row) => {
+        if (row.every((column) => column.occupied)) {
+            linesCleared += 1;
+            acc.unshift([...blankRow])
+        } else acc.push(row);
+
+        return acc;
+    }, [])
+
+    if (linesCleared > 0) addLinesCleared(linesCleared);
 
     // if we colided, reset the player
     if (player.collided || player.isFastDropping) resetPlayer();
