@@ -1,7 +1,8 @@
 import './GameController.css';
-import { Action, actionForKey } from '../utils/Input';
+import { Action, actionForKey, actionIsDrop } from '../utils/Input';
 import { playerController } from '../utils/PlayerController';
-import { useInterval } from '../hooks/useInterval'
+import { useInterval } from '../hooks/useInterval';
+import { useDropTime } from '../hooks/useDropTime';
 
 const GameController = ({
     board, 
@@ -10,26 +11,37 @@ const GameController = ({
     setGameOver, 
     setPlayer
 }) => {
+    // setting up drop time
+    const [dropTime, pauseDropTime, resumeDropTime] = useDropTime({
+        gameStats
+    });
+
     useInterval(() => {
         handleInput( {action: Action.SlowDrop} );
-    }, 1000);
+    }, dropTime);
 
     const onKeyUp = ({code}) => {
-        const action = actionForKey(code)
-
-        if (action === Action.Quit) setGameOver(true);
-
-        // if (code === 'KeyQ') {
-        //     setGameOver(true);
-        // }
-        // console.log(`onKeyUp: ${code}`)
+        const action = actionForKey(code);
+        if (actionIsDrop(action)) resumeDropTime();        
+        // if (action === Action.Quit) setGameOver(true);
     }
 
     const onKeyDown = ({code}) => {
         const action = actionForKey(code);
-        handleInput({action});
-        // console.log(`onKeyDown: ${code}`)
-    }
+
+        if (action === Action.Pause) {
+            if (dropTime) {
+                pauseDropTime();
+            } else {
+                resumeDropTime();
+            }
+        } else if (action === Action.Quit) {
+            setGameOver(true);
+        } else {
+            if (actionIsDrop(action)) pauseDropTime();
+            handleInput({action});
+        }
+    };
 
     const handleInput = ({action}) => {
         playerController({
