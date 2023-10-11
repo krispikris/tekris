@@ -3,19 +3,19 @@ const className = 'tetromino';
 export const TETROMINOES = {
     I: {
         shape: [
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0]
+            [1, 1, 1, 1],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
         ], 
         className: `${className} ${className}__i`
     },
     
     J: {
         shape: [
-            [0, 1, 0],
-            [0, 1, 0],
-            [1, 1, 0]
+            [0, 0, 0],
+            [1, 0, 0],
+            [1, 1, 1]
 
         ], 
         className: `${className} ${className}__j`
@@ -23,9 +23,9 @@ export const TETROMINOES = {
     
     L: {
         shape: [
-            [0, 1, 0],
-            [0, 1, 0],
-            [0, 1, 1]
+            [0, 0, 1],
+            [1, 1, 1],
+            [0, 0, 0]
         ], 
         className: `${className} ${className}__l`
     },
@@ -49,8 +49,8 @@ export const TETROMINOES = {
     
     T: {
         shape: [
-            [1, 1, 1],
             [0, 1, 0],
+            [1, 1, 1],
             [0, 0, 0]
         ], 
         className: `${className} ${className}__t`
