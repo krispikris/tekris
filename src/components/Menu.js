@@ -4,7 +4,7 @@ const Menu = ({onClick}) =>
     <div className='Menu'>
         <button className='Button' onClick={onClick}>
             {/* Play Te[k]ris! */}
-            PLAY TEKRIS!
+            PLAY TE[K]RIS!
         </button>
     </div>
 
